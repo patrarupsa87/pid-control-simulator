@@ -7,42 +7,42 @@ int main(){
     double tau;
     double control;
     double error;
-    double kp=0.001;
+    double kp;
     double ki;
     double integral=0;
     double integral_max=10;
     double integral_min=-10;
-    double kd=0.001;
+    double kd;
     double derivative;
     double previous_error=0;
-    double u_max=-2;
-    double u_min=+2;
-    tau=0.3;
+    double u_max=+2;
+    double u_min=-2;
+    tau=1.0;
     setpoint =1.0;
-    dt=0.5;
+    dt=0.1;
     output=0.0;
-    ki=0.2;
+    kp=1.0;
+    ki=0.7;
+    kd=0.09;
     for(time=0; time<=10.0; time=time+dt){
-        if(control>u_max){
-            control=u_max;
-        }
-        if(control<u_min){
-            control=u_min;
-        }
+        error=setpoint-output;
+        derivative=(error-previous_error)/dt;
+        integral=integral+error*dt;
         if (integral>integral_max){
             integral=integral_max;
         }
         if(integral<integral_min){
             integral=integral_min;
         }
-        error=setpoint-output;
-        derivative=(error-previous_error)/dt;
-        integral=integral+error*dt;
         control=kp*error+ki*integral+kd*derivative;
+        if(control>u_max){
+            control=u_max;
+        }
+        if(control<u_min){
+            control=u_min;
+        }
         output=output+(control-output)*dt/tau;
-        printf("%lf  | ",time);
-        printf("%lf  |",output);
-        printf("%lf \n",control);
+        printf("%.4lf,%.4lf,%.4lf,%.4lf\n",time, output, control,error);
         previous_error=error;
     }
     
