@@ -1,4 +1,5 @@
 #include <stdio.h>
+void clamp(double *point, double max, double min);
 int main(){
     double setpoint;
     double output;
@@ -28,22 +29,21 @@ int main(){
         error=setpoint-output;
         derivative=(error-previous_error)/dt;
         integral=integral+error*dt;
-        if (integral>integral_max){
-            integral=integral_max;
-        }
-        if(integral<integral_min){
-            integral=integral_min;
-        }
+        clamp(&integral,integral_max,integral_min);
         control=kp*error+ki*integral+kd*derivative;
-        if(control>u_max){
-            control=u_max;
-        }
-        if(control<u_min){
-            control=u_min;
-        }
+        clamp(&control,u_max,u_min);
         output=output+(control-output)*dt/tau;
         printf("%.4lf,%.4lf,%.4lf,%.4lf\n",time, output, control,error);
         previous_error=error;
+    }
+    
+}
+void clamp(double *point, double max, double min){
+    if(*point> max){
+        *point=max;
+    }
+    if(*point<min){
+        *point=min;
     }
     
 }
