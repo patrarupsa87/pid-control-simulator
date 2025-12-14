@@ -2,22 +2,14 @@
 #include "pid_config.h"
 void clamp(double *point, double max, double min);
 int main(){
-    double setpoint;
-    double output;
-    double time;
-    double control;
-    double error;
+    double setpoint=1;
+    double output=0;
+    double time=0;
+    double control=0;
+    double error=0;
     double integral=0;
-    double kd;
-    double derivative;
+    double derivative=0;
     double previous_error=0;
-    tau=1.0;
-    setpoint =1.0;
-    dt=0.1;
-    output=0.0;
-    kp=1.0;
-    ki=0.7;
-    kd=0.09;
     for(time=0; time<=10.0; time=time+dt){
         error=setpoint-output;
         derivative=(error-previous_error)/dt;
