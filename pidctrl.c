@@ -1,23 +1,16 @@
 #include <stdio.h>
+#include "pid_config.h"
 void clamp(double *point, double max, double min);
 int main(){
     double setpoint;
     double output;
-    double dt;
     double time;
-    double tau;
     double control;
     double error;
-    double kp;
-    double ki;
     double integral=0;
-    double integral_max=10;
-    double integral_min=-10;
     double kd;
     double derivative;
     double previous_error=0;
-    double u_max=+2;
-    double u_min=-2;
     tau=1.0;
     setpoint =1.0;
     dt=0.1;
