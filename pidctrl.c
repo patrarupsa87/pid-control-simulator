@@ -15,12 +15,20 @@ int main(){
     double kd=0.001;
     double derivative;
     double previous_error=0;
+    double u_max=-2;
+    double u_min=+2;
     tau=0.3;
     setpoint =1.0;
     dt=0.5;
     output=0.0;
     ki=0.2;
     for(time=0; time<=10.0; time=time+dt){
+        if(control>u_max){
+            control=u_max;
+        }
+        if(control<u_min){
+            control=u_min;
+        }
         if (integral>integral_max){
             integral=integral_max;
         }
